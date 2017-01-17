@@ -285,12 +285,12 @@ define logrotate::rule(
 
   case $rotate_every {
     'undef': {}
-    'hour', 'hourly': {}
+    'hour': { $sane_rotate_every = 'hourly' }
     'day': { $sane_rotate_every = 'daily' }
     'week': { $sane_rotate_every = 'weekly' }
     'month': { $sane_rotate_every = 'monthly' }
     'year': { $sane_rotate_every = 'yearly' }
-    'daily', 'weekly','monthly','yearly': { $sane_rotate_every = $rotate_every }
+    'hourly', 'daily', 'weekly','monthly','yearly': { $sane_rotate_every = $rotate_every }
     default: {
       fail("Logrotate::Rule[${name}]: invalid rotate_every value")
     }
